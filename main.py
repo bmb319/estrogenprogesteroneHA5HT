@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import math 
 from comp_model import *
 
-
 #the equations model the differential terms of this model, calculate how much these variables are going to change in each iterations
 #find the ks that give the diff eq to 0
 
@@ -23,7 +22,7 @@ mc_switch = 0 #Switch that turns on an off all effects of mast cell presence.
 
 
 #Initial conditions
-z0 = [0.00073, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3.1968, 140.3708, 1.4717,  100, 250, 300, 0.7221, 1.3593, 1.0084, 150, 3,	140,	0.7205,	1.3539,	1.0051, 0.0593] #value at time zero SUBSTITUTE THE 1's. 
+z0 = [0.00073, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3.1968, 140.3708, 1.4717,  100, 250, 300, 0.7221, 1.3593, 1.0084, 150, 3,	140,	0.7205,	1.3539,	1.0051, 0.0593, 1, 1] #value at time zero SUBSTITUTE THE 1's. 
 #Constant parameters for steady state
  
 #buscar valores que tengan sentido y evidentemente sea positive
