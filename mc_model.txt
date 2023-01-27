@@ -1,0 +1,37 @@
+    ## ------------------ Mast Cells model -------------------------------
+    ## Mast cell variables
+    #z[29] Cytosolic histidine in mast cells (uM)
+    #z[30] Cytosolic pool of histidine in mast cells (uM)
+    #z[31] Cytosolic histamine in mast cells (uM)
+    #z[32] Vesicular histamine in mast cells (uM)
+    #z[33] Activated g-coupled protein from H3 receptors in mast cells (uM)
+    #z[34] Activated T protein from H3 receptors in mast cells (uM)
+    #z[35] histamine to H3 receptors in mast cells (uM)
+    #z[36] E2 to GPER in mast cells (uM)
+    #z[37] progesterone to mPR in mast cells (uM)
+
+    c1 = 1 #From cHT to HTpool.
+    c2 = 1 #From HTpool to cHT.
+    c3 = 1 #Removal of gHT or use somewhere else.
+    c4 = 100 # bound histamine to autoreceptors produce g*.
+    c5 = 961.094 #T∗ facilitates the reversion of G∗ to G.
+    c6 = 20 #G∗ produces T∗.
+    c7 = 66.2992 #decay coefficient of T∗
+    c8 = 5  #z[19] binds to autoreceptors.
+    c9 = 65.6179 #z[19] dissociates from autoreceptors.
+    g0Hmc = 10  #Total g-coupled protein for H3 on mast cell (uM).
+    t0Hmc = 10 #Total T protein for H3 on mast cell.
+    b0Hmc = 10  #Total H3 receptors on mast cell.
+    basal_bound_ec2_mc = 1 #Basal bound extracellular E2 to GPER in mast cells. uM.
+    basal_bound_ep_mc = 1 #Basal bound extracellular progesterone to mPRs in mast cells. uM
+
+
+    dz[29] = mc_activation(t, mc_switch, mc_start_time)*VHTLmc(z[20]) - inhibsynHAtoHA(z[33], gstar_ha_basal)*VHTDCmc(z[29]) - c1*(z[29]) + c2*(z[30])
+    dz[30] = c1*(z[29]) - c2*(z[30]) - c3*(z[30])
+    dz[31] = inhibsynHAtoHA(z[33], gstar_ha_basal)*VHTDCmc(z[29]) - VMATHmc(z[31], z[32]) - VHNMTmc(z[31]) + mc_activation(t, mc_switch, mc_start_time) * VHATmc(z[19])
+    dz[32] = VMATHmc(z[31], z[32]) - inhib_ep_to_ha(z[37], basal_bound_ep_mc)*activ_E2_to_ha_mc(z[36], basal_bound_ec2_mc)*inhibRHAtoHA(z[33], gstar_ha_basal)*degran_ha_mc(mc_activation(t, mc_switch, mc_start_time))
+    dz[33] = c4*z[35]**2*(g0Hmc - z[33]) - c5*z[34]*z[33]
+    dz[34] = c6*z[33]**2*(t0Hmc - z[34])  - c7*z[34]
+    dz[35] = c8*z[19]*(b0Hmc - z[35]) - c9*z[35]
+    dz[36] = a30 * z[1] - a31 * z[36]
+    dz[37] = a32 * z[7] - a33 * z[37]
