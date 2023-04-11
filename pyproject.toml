@@ -13,6 +13,8 @@ urllib3 = "^1.26.12"
 matplotlib = "^3.6.2"
 pandas = "^1.5.2"
 scipy = "^1.9.3"
+ipywidgets = "^8.0.6"
+ipython = "^8.12.0"
 
 [tool.poetry.dev-dependencies]
 debugpy = "^1.6.2"

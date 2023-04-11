@@ -29,7 +29,10 @@ from VHNMTmc import *
 from activ_E2_to_ha_mc import *
 from activ_E2_to_ha_syn_neuron import *
 from activ_E2_to_ha_R_neuron import *
-from inhib_ep_to_ha import *
+from inhib_ep_to_ha_mc import *
+from inhib_cp_to_ERalpha import *
+
+
 import numpy as np
 
 def comp_model(z, t):
@@ -39,27 +42,24 @@ def comp_model(z, t):
 
     ## ------------------Estrogen and Progesterone in HA neuron (Soma) -------------------------------
     #Estrogen and progesterone variables.
-    #z[0] Cytosolic E2. $
+    #z[0] Cytosolic E2. 30 to 400 pg/mL for premenopausal women , 0 to 30 pg/mL for postmenopausal women, 10 to 50 pg/mL for men
     #z[1] Extracellular E2. (250 pg/ml)
-    #z[2] Cytosolic E1. $
+    #z[2] Cytosolic E1. (110 pg/ml)
     #z[3] Extracellular E1. (110 pg/ml)
     #z[4] Extracellular E3. (9 pg/ml)
-    #z[5] Cytosolic E3. $
-    #z[6] Cytosolic progesterone in uM. $
-    #z[7]  Extracellular progesterone in uM. $
-    #z[8]  Extracellular cholesterol in uM. $
-    #z[9]  Cytosolic cholesterol in uM. $
+    #z[5] Cytosolic E3. (9 pg/ml)
+    #z[6] Cytosolic progesterone in uM. 5–20 ng/ml
+    #z[7]  Extracellular progesterone in uM. 5–20 ng/ml
+    #z[8]  Extracellular cholesterol in uM. (62221.6 uM)
+    #z[9]  Cytosolic cholesterol in uM. (62221.6 uM)
     #z[10] Extracellular pregnenolone in uM. $
     #z[11]  Cytosolic pregnenolone in uM. $
-    #z[12] Extracellular androstenedione in uM. $
-    #z[13] Cytosolic androstenedione in uM. $
-    #z[14] Extracellular testosterone in uM. $
-    #z[15] Cytosolic testosterone in uM. $
+    #z[12] Extracellular androstenedione in uM. 
+    #z[13] Cytosolic androstenedione in uM $ 
+    #z[15] Cytosolic testosterone in uM. 
     #z[16] Bound E2 to ER-alpha receptors in the nucleus of neurons in uM. $
 
     a1 = 1 #Constant of progesterone effect to c2. hour^-1
-    a2 = 1 #Constant of histamine effects on histamine.hour^-1
-    a3 = 1 #Constant of serotonin effects on serotonin. hour^-1
     a4 = 1 #Constant of blood progesterone diffusion to extracellular progesterone. hour^-1
     a5 = 1 #Constant of extracellular progesterone removal away from the synapse. hour^-1
     a6 = 1 #Constant of diffusion of progesterone from extracellular space to cytosol. hour^-1
@@ -84,8 +84,10 @@ def comp_model(z, t):
     a25 = 1 #Constant of diffusion of testosterone from blood to extracellular space. hour^-1
     a26 = 1 #Constant of diffusion of testosterone from extracellular space to cytosol. hour^-1
     a27 = 1 #Constant of removal of extracellular testosterone to somewhere else. hour^-1
-    a28 = 0.1 #Constant of cytosol c2 binding to ER2 alpha receptor.  hour^-1
+    a28 = 0.1 #Constant of cytosol E2 binding to ER2 alpha receptor.  hour^-1
     a29 = 0.1 #Constant of bound cytosol E2 to free cytosol E2.  hour^-1
+
+  
     a30 = 0.1 #Constant of free extracellular E2 to bound E2 in GPER in MC. hour^-1
     a31 = 0.1 #Constant of bound extracellular E2 in GPER to free extracellular E2 in MC. hour^-1
     a32 = 0.1 #Constant of free extracellular progesterone to bound progesterone in mPRs in MC. hour^-1
@@ -103,14 +105,15 @@ def comp_model(z, t):
     bandro = 100 #Blood androstenedione in uM. $
     btest = 100 #Blood testosterone in uM. $
     basal_bound_cc2 = 1 #Basal bound cytosolic E2 to ER alpha. uM.
-
+    basal_cp = 1 # Basal cytosolic progeserone in uM. 
+  
   
     #Equations
-    dz[0] = a1*z[6] + a8 * (z[1] - z[0]) - V17betaHSD1(z[0], z[2]) + VCYP19_2(z[15]) - a28 * z[0] + a29 * z[16]
+    dz[0] = a1*z[6] + a8 * (z[1] - z[0]) - V17betaHSD1(z[0], z[2]) + VCYP19_2(z[15], z[13])
 
     dz[1] = a7 * (bc2 - z[1]) - a8 * (z[1] - z[0]) - a9 * z[1] 
 
-    dz[2] = a11 * (z[3] - z[2]) + V17betaHSD1(z[0], z[2]) - VP450_3A5(z[2]) - VCOMT(z[4]) + VCYP19_1(z[13])
+    dz[2] = a11 * (z[3] - z[2]) + V17betaHSD1(z[0], z[2]) - VP450_3A5(z[2]) - VCOMT(z[4]) + VCYP19_1(z[13], z[15])
 
     dz[3] = a10 * (bc1 - z[3]) - a11 * (z[3] - z[2]) - a12 * z[3]
 
@@ -132,13 +135,13 @@ def comp_model(z, t):
 
     dz[12] = a22 * (bandro - z[12]) - a23 * (z[12] - z[13]) - a24 * z[12]
 
-    dz[13] = a23 * (z[12] - z[13]) + VCYP17(z[11]) - V17betaHSD2(z[13], z[15]) - VCYP19_1(z[13])
+    dz[13] = a23 * (z[12] - z[13]) + VCYP17(z[11]) - V17betaHSD2(z[13], z[15]) - VCYP19_1(z[13], z[15])
 
     dz[14] = a25 * (btest - z[14]) - a26 * (z[14] - z[15]) - a27 * z[14]
 
-    dz[15] = a26 * (z[14] - z[15]) + V17betaHSD2(z[13], z[15]) - VCYP19_2(z[15])
+    dz[15] = a26 * (z[14] - z[15]) + V17betaHSD2(z[13], z[15]) - VCYP19_2(z[15], z[13])
 
-    dz[16] = a28 * z[0] - a29 * z[16]
+    dz[16] = a28 * inhib_cp_to_ERalpha(z[6], basal_cp) * z[0] - a29 * z[16]
 
     ## ------------------Histamine neuron model -------------------------------
     ## Histamine neuron variables
@@ -192,7 +195,7 @@ def comp_model(z, t):
     #Synapse
     dz[17] = inhibsynHAtoHA(z[23], gstar_ha_basal) * activ_E2_to_ha_syn_neuron(z[16], basal_bound_cc2) * VHTDC(z[21])  - VMATH(z[17], z[18]) -  VHNMT(z[17]) - b1*(z[17] - z[19]) + VHAT(z[19])
     dz[18] = VMATH(z[17], z[18]) - inhibRHAtoHA(z[23], gstar_ha_basal)*activ_E2_to_ha_R_neuron(z[26],gstar_E2_basal)*fireha(t)*b2*z[18]
-    dz[19] = inhibRHAtoHA(z[23], gstar_ha_basal)*activ_E2_to_ha_R_neuron(z[26],gstar_E2_basal)*fireha(t)*b2*z[18] - VHAT(z[19]) + b1*(z[17] - z[19])  - b3*z[19] - mc_activation(t, mc_switch, mc_start_time) * VHATmc(z[19]) + inhibRHAtoHA(z[33], gstar_ha_basal)*degran_ha_mc(mc_activation(t, mc_switch, mc_start_time))
+    dz[19] = inhibRHAtoHA(z[23], gstar_ha_basal)*activ_E2_to_ha_R_neuron(z[26],gstar_E2_basal)*fireha(t)*b2*z[18] - VHAT(z[19]) + b1*(z[17] - z[19])  - b3*z[19] - mc_activation(t, mc_switch, mc_start_time) * VHATmc(z[19]) + inhibRHAtoHA(z[33], gstar_ha_basal)*degran_ha_mc(mc_activation(t, mc_switch, mc_start_time))*z[32]
     dz[20] = HTin(t) - VHTL(z[20])  - b4*(z[20] - bht0) - mc_activation(t, mc_switch, mc_start_time)*VHTLmc(z[20])
     dz[21] = VHTL(z[20]) - inhibsynHAtoHA(z[23], gstar_ha_basal) * activ_E2_to_ha_syn_neuron(z[16], basal_bound_cc2) * VHTDC(z[21]) - b5*z[21] + b6*z[22]
     dz[22] = b5*z[21] - b6*z[22] - b7*z[22]
@@ -236,7 +239,7 @@ def comp_model(z, t):
     dz[29] = mc_activation(t, mc_switch, mc_start_time)*VHTLmc(z[20]) - inhibsynHAtoHA(z[33], gstar_ha_basal)*VHTDCmc(z[29]) - c1*(z[29]) + c2*(z[30])
     dz[30] = c1*(z[29]) - c2*(z[30]) - c3*(z[30])
     dz[31] = inhibsynHAtoHA(z[33], gstar_ha_basal)*VHTDCmc(z[29]) - VMATHmc(z[31], z[32]) - VHNMTmc(z[31]) + mc_activation(t, mc_switch, mc_start_time) * VHATmc(z[19])
-    dz[32] = VMATHmc(z[31], z[32]) - inhib_ep_to_ha(z[37], basal_bound_ep_mc)*activ_E2_to_ha_mc(z[36], basal_bound_ec2_mc)*inhibRHAtoHA(z[33], gstar_ha_basal)*degran_ha_mc(mc_activation(t, mc_switch, mc_start_time))
+    dz[32] = VMATHmc(z[31], z[32]) - inhib_ep_to_ha_mc(z[37], basal_bound_ep_mc)*activ_E2_to_ha_mc(z[36], basal_bound_ec2_mc)*inhibRHAtoHA(z[33], gstar_ha_basal)*degran_ha_mc(mc_activation(t, mc_switch, mc_start_time))*z[32]
     dz[33] = c4*z[35]**2*(g0Hmc - z[33]) - c5*z[34]*z[33]
     dz[34] = c6*z[33]**2*(t0Hmc - z[34])  - c7*z[34]
     dz[35] = c8*z[19]*(b0Hmc - z[35]) - c9*z[35]

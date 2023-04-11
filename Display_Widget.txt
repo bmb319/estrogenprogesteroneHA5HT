@@ -1,0 +1,45 @@
+## TESTING
+
+
+from IPython.display import display as idisp
+import ipywidgets as widgets
+
+i=0
+
+
+def plot_graph(): 
+  global i
+  plt.clf()
+  plt.plot(x[:, i])
+  ax = plt.gca()
+  plt.title('Variable '+str(i))
+  plt.show()
+
+def prev_button_clicked(obj):
+  global i 
+  if(i>0):
+    i = i - 1
+    plot_graph()
+
+def next_button_clicked(obj):
+  global i 
+  if(i<len(lims)-1):
+    i  = i + 1
+    plot_graph()
+
+
+
+
+button_prev = widgets.Button(description="<", layout=widgets.Layout(width='10%', height='20px'))
+button_next = widgets.Button(description=">", layout=widgets.Layout(width='10%', height='20px'))
+
+
+
+
+button_prev.on_click(prev_button_clicked)
+button_next.on_click(next_button_clicked)
+
+idisp(widgets.HBox([button_prev, button_next]))
+
+
+plot_graph()
