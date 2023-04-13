@@ -1,5 +1,5 @@
-## Function of cytosolic progesterone decreasing ER alpha receptor binding sites. 
-# cp is cytosolic progesterone while basal_cp is equilibrium cytosolic progesterone. 
+## Function of  progesterone decreasing ER alpha receptor binding sites. 
+# cp is  progesterone while basal_cp is equilibrium progesterone. 
 # a is ratio of inhibition, a = 1 when cp = basal_cp.
 from matplotlib import numpy
 

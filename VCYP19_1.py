@@ -1,4 +1,4 @@
-##Function of androstenedione (b) -> E1 (estrone) in cytosol by CYP19. 
+##Function of androstenedione (b) -> E1 (estrone) in cytosol by CYP19 P450 enzyme. 
 #Inhibited by testosterone (c).
 #https://doi.org/10.1016/S0021-9258(17)33694-3
 def VCYP19_1(b, c):

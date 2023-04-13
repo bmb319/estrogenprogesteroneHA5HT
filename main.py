@@ -22,7 +22,7 @@ mc_switch = 0 #Switch that turns on an off all effects of mast cell presence.
 
 
 #Initial conditions
-z0 = [0.00073, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3.1968, 140.3708, 1.4717,  100, 250, 300, 0.7221, 1.3593, 1.0084, 0.7221, 1.3593, 1.0084, 150, 3,	140,	0.7205,	1.3539,	1.0051, 0.0593, 1, 1] #value at time zero SUBSTITUTE THE 1's. 
+z0 = [3.1968, 140.3708, 1.4717,  100, 250, 300, 0.7221, 1.3593, 1.0084, 0.7221, 1.3593, 1.0084, 150, 3,	140,	0.7205,	1.3539,	1.0051, 0.0593, 1, 1, 1, 1, 1, 1, 1, 1] #value at time zero SUBSTITUTE THE 1's. 
 #Constant parameters for steady state
  
 #buscar valores que tengan sentido y evidentemente sea positive
@@ -33,7 +33,7 @@ x = odeint(comp_model, z0, time_array) #shows how the steady state values have c
 
 
 plt.figure()
-plt.plot(time_array, x[:, 19])
+plt.plot(time_array, x[:, 2])
 plt.xlabel('Time (h)')
 plt.ylabel('HA concentration (uM)')
 plt.show()
