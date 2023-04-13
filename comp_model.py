@@ -93,18 +93,18 @@ def comp_model(z, t):
 
 
     #Synapse
-    dz[0] = inhibsynHAtoHA(z[6], gstar_ha_basal) * activ_E2_to_ha_syn_neuron(z[26], basal_bound_ce2) * VHTDC(z[4])  - VMATH(z[0], z[1]) -  VHNMT(z[0]) - b1*(z[0] - z[2]) + VHAT(z[2])
+    dz[0] = inhibsynHAtoHA(z[6], gstar_ha_basal) * activ_E2_to_ha_syn_neuron(z[23], basal_bound_ce2) * VHTDC(z[4])  - VMATH(z[0], z[1]) -  VHNMT(z[0]) - b1*(z[0] - z[2]) + VHAT(z[2])
     dz[1] = VMATH(z[0], z[1]) - inhibRHAtoHA(z[6], gstar_ha_basal)*activ_E2_to_ha_R_neuron(z[9], gstar_E2_basal)*fireha(t)*b2*z[1]
-    dz[2] = inhibRHAtoHA(z[6], gstar_ha_basal)*activ_E2_to_ha_R_neuron(z[9], gstar_E2_basal)*fireha(t)*b2*z[1] - VHAT(z[2]) + b1*(z[0] - z[2])  - b3*z[2] - mc_activation(t, mc_switch, mc_start_time) * VHATmc(z[2]) + inhibRHAtoHA(z[16], gstar_ha_basal)*degran_ha_mc(mc_activation(t, mc_switch, mc_start_time))*z[15]
+    dz[2] = inhibRHAtoHA(z[6], gstar_ha_basal)*activ_E2_to_ha_R_neuron(z[9], gstar_E2_basal)*fireha(t)*b2*z[1] - VHAT(z[2]) + b1*(z[0] - z[2])  - b3*z[2] - mc_activation(t, mc_switch, mc_start_time) * VHATmc(z[2]) + degran_ha_mc(mc_activation(t, mc_switch, mc_start_time))*z[15]
     dz[3] = HTin(t) - VHTL(z[3])  - b4*(z[3] - bht0) - mc_activation(t, mc_switch, mc_start_time)*VHTLmc(z[3])
-    dz[4] = VHTL(z[3]) - inhibsynHAtoHA(z[6], gstar_ha_basal) * activ_E2_to_ha_syn_neuron(z[26], basal_bound_ce2) * VHTDC(z[4]) - b5*z[4] + b6*z[5]
+    dz[4] = VHTL(z[3]) - inhibsynHAtoHA(z[6], gstar_ha_basal) * activ_E2_to_ha_syn_neuron(z[23], basal_bound_ce2) * VHTDC(z[4]) - b5*z[4] + b6*z[5]
     dz[5] = b5*z[4] - b6*z[5] - b7*z[5]
     dz[6]  = b8*z[8]**2*(g0HH - z[6]) - b9*z[7]*z[6]
     dz[7] = b10*z[6]**2*(t0HH - z[7])  - b11*z[7]
     dz[8] = b12*z[2]*(b0HH - z[8])  - b13*z[8]
     dz[9]  = b14*z[11]**2*(g0GPER - z[9]) - b15*z[10]*z[9]
     dz[10] = b16*z[9]**2*(t0GPER - z[10])  - b17*z[10]
-    dz[11] =  b18*z[24]*(b0GPER - z[11])  - b19*z[11]
+    dz[11] =  b18*z[21]*(b0GPER - z[11])  - b19*z[11]
 
 
 
@@ -114,11 +114,9 @@ def comp_model(z, t):
     #z[13] Cytosolic pool of histidine in mast cells (uM)
     #z[14] Cytosolic histamine in mast cells (uM)
     #z[15] Vesicular histamine in mast cells (uM)
-    #z[16] Activated g-coupled protein from H3 receptors in mast cells (uM)
-    #z[17] Activated T protein from H3 receptors in mast cells (uM)
-    #z[18] histamine to H3 receptors in mast cells (uM)
-    #z[19] bound E2 to GPER in mast cells (uM)
-    #z[20] bound progesterone to mPR in mast cells (uM)
+
+    #z[16] bound E2 to GPER in mast cells (uM)
+    #z[17] bound progesterone to mPR in mast cells (uM)
 
     c1 = 1 #From cHT to HTpool.
     c2 = 1 #From HTpool to cHT.
@@ -143,39 +141,36 @@ def comp_model(z, t):
     basal_bound_ep_mc = 1 #Basal bound extracellular progesterone to mPRs in mast cells. uM
 
 
-    dz[12] = mc_activation(t, mc_switch, mc_start_time)*VHTLmc(z[3]) - inhibsynHAtoHA(z[16], gstar_ha_basal)*VHTDCmc(z[12]) - c1*(z[12]) + c2*(z[13])
+    dz[12] = mc_activation(t, mc_switch, mc_start_time)*VHTLmc(z[3]) - VHTDCmc(z[12]) - c1*(z[12]) + c2*(z[13])
     dz[13] = c1*(z[12]) - c2*(z[13]) - c3*(z[13])
-    dz[14] = inhibsynHAtoHA(z[16], gstar_ha_basal)*VHTDCmc(z[12]) - VMATHmc(z[14], z[15]) - VHNMTmc(z[14]) + mc_activation(t, mc_switch, mc_start_time) * VHATmc(z[2])
-    dz[15] = VMATHmc(z[14], z[15]) - inhib_ep_to_ha_mc(z[20], basal_bound_ep_mc)*activ_E2_to_ha_mc(z[19], basal_bound_ec2_mc)*inhibRHAtoHA(z[16], gstar_ha_basal)*degran_ha_mc(mc_activation(t, mc_switch, mc_start_time))*z[15]
-    dz[16] = c4*z[18]**2*(g0Hmc - z[16]) - c5*z[17]*z[16]
-    dz[17] = c6*z[16]**2*(t0Hmc - z[17])  - c7*z[17]
-    dz[18] = c8*z[2]*(b0Hmc - z[18]) - c9*z[18]
-    dz[19] = c10 * z[1] - c11 * z[19]
-    dz[20] = c12 * z[7] - c13 * z[20]
+    dz[14] = VHTDCmc(z[12]) - VMATHmc(z[14], z[15]) - VHNMTmc(z[14]) + mc_activation(t, mc_switch, mc_start_time) * VHATmc(z[2])
+    dz[15] = VMATHmc(z[14], z[15]) - inhib_ep_to_ha_mc(z[17], basal_bound_ep_mc)*activ_E2_to_ha_mc(z[16], basal_bound_ec2_mc)*degran_ha_mc(mc_activation(t, mc_switch, mc_start_time))*z[15]
+    dz[16] = c10 * z[1] - c11 * z[16]
+    dz[17] = c12 * z[7] - c13 * z[17]
 
 
 
     ## ------ Estrogen and Progesterone ----------------------------------------------
   
     #Variables
-    #z[21] Blood progesterone (uM)
-    #z[22] Extracellular progesterone (uM)
-    #z[23] Cytosolic progesterone (uM)
-    #z[23] Blood E2 (uM)
-    #z[24] Extracellular E2 (uM)
-    #z[25] Cytosolic E2 (uM)
-    #z[26] Bound E2 to ER-alpha receptors in the nucleus of neurons (uM).
+    #z[18] Blood progesterone (uM)
+    #z[19] Extracellular progesterone (uM)
+    #z[20] Cytosolic progesterone (uM)
+    #z[20] Blood E2 (uM)
+    #z[21] Extracellular E2 (uM)
+    #z[22] Cytosolic E2 (uM)
+    #z[23] Bound E2 to ER-alpha receptors in the nucleus of neurons (uM).
     d1 = 0.1
     d2 = 0.1
     basal_cp = 1
   
 
+    dz[18] = 0
+    dz[19] = 0
+    dz[20] = 0
     dz[21] = 0
     dz[22] = 0
-    dz[23] = 0
-    dz[24] = 0
-    dz[25] = 0
-    dz[26] = d1 * inhib_cp_to_ERalpha(z[23], basal_cp) * z[25] - d2 * z[26]
+    dz[23] = d1 * inhib_cp_to_ERalpha(z[20], basal_cp) * z[22] - d2 * z[23]
 
   
   
