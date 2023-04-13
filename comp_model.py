@@ -132,11 +132,6 @@ def comp_model(z, t):
     c12 = 0.1 #Constant of free extracellular progesterone to bound progesterone in mPRs in MC. hour^-1
     c13 = 0.1 ##Constant of bound progesterone in mPRs to free extracellular progesterone in MC. hour^-1
 
-
-  
-    g0Hmc = 10  #Total g-coupled protein for H3 on mast cell (uM).
-    t0Hmc = 10 #Total T protein for H3 on mast cell.
-    b0Hmc = 10  #Total H3 receptors on mast cell.
     basal_bound_ec2_mc = 1 #Basal bound extracellular E2 to GPER in mast cells. uM.
     basal_bound_ep_mc = 1 #Basal bound extracellular progesterone to mPRs in mast cells. uM
 
