@@ -43,6 +43,7 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+
 nosetests.xml
 coverage.xml
 *.cover
@@ -131,6 +132,10 @@ venv.bak/
 # Spyder project settings
 .spyderproject
 .spyproject
+
+#Replit project settings
+.replit
+replit.nix
 
 # Rope project settings
 .ropeproject
