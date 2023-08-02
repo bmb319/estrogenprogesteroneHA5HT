@@ -1,4 +1,5 @@
 ## Function of progesterone bounding to mPRs for inhibition of mast cells degranulation.
+# DOI: 
 # a is ratio of inhibition, a = 1 when bound_ee2 = basal_bound_ee2.
 from matplotlib import numpy
 

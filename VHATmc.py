@@ -1,4 +1,5 @@
 ## Function of  the putative HA transporter in mast cells. 
+#DOI:
 # UNITS in uM/h. 
 # b = eha
 def VHATmc(b):

@@ -1,4 +1,5 @@
 ## Function of histidine decarboxylase
+#DOI:
 # Histamine synthesis in cytosol.
 # UNITS in uM/h. 
 def VHTDC(b):

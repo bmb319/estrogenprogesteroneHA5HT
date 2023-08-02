@@ -1,4 +1,5 @@
 ## Function of  the putative HA transporter in HA neuron. 
+#DOI:
 # UNITS in uM/h. 
 # b = eha
 def  VHAT(b):

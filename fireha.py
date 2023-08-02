@@ -1,4 +1,5 @@
 ## Histamine firing function. 
+#DOI:
 # Units in events/h.
 import numpy as np
 def fireha(t):
