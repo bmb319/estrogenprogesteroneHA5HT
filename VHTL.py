@@ -1,4 +1,5 @@
 ## Function of histidine transporter. 
+#DOI:
 # Histidine transport from blood to cytosol.
 # UNITS in uM/h. 
 # b = bht.

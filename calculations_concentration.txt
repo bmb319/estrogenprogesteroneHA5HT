@@ -1,0 +1,39 @@
+Variables
+
+
+#z[18] Blood progesterone (uM) 5–20 ng/ml or 3–35 ng/mL
+Molar mass = 314.469 g/mol, 
+progesterone = 17 ng/ml / 314.469 ng/nmol = 0.054 nmol/ml -> 0.054 (umol/L) uM
+
+
+#z[19] Extracellular progesterone (uM) 1 ng/g
+brain density = 	1.046 g/ml
+Molar mass = 314.469 g/mol
+progesterone = 1ng/g * 1.046 g/ml -> 1.046 ng/ml / 314.469 ng/nmol = 0.0033 nmol/ml -> 0.0033 (umol/L) uM
+
+
+#z[20] Cytosolic progesterone (uM) from 5 to 10 ng/g
+brain density = 	1.046 g/ml
+Molar mass = 314.469 g/mol
+progesterone = 7.5 ng/g * 1.046 g/ml = 7.845 ng/ml -> 7.845 ng/ml / 314.469 ng/nmol = 0.02494 nmol/ml -> 0.02494 (umol/L) uM
+
+
+#z[21] Blood E2 (uM) 109±15 pg/ml (30 to 400 pg/mL)
+Molar mass = 314.469 g/mol
+progesterone = 200 pg/ml / 314.469 pg/pmol = 0.63599 pmol/ml * 0.001 nmol/pmol =  0.000636 nmol/ml -> 0.000636 uM
+
+
+
+
+#z[22] Extracellular E2 (uM) 250 pg/ml
+Molar mass = 272.4 g/mol
+E2 = 0.250 ng/ml / 272.4 ng/nmol = 2.2944e-4 nmol/ml -> 2.2944e-4 (umol/L) uM
+
+#z[23] Cytosolic E2 (uM) 6.4 pg/mg -> ng/g
+brain density = 	1.046 g/ml
+Molar mass = 272.4 g/mol
+progesterone = 6.4 ng/g * 1.043 g/ml -> 6.675 ng/ml / 272.4 ng/nmol = 0.0245 nmol/ml -> 0.0245 (umol/L) uM
+
+
+#z[24] Bound E2 to ER-alpha receptors in the nucleus of neurons (uM). 
+

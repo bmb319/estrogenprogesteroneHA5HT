@@ -1,4 +1,5 @@
 ## Function of histamine inhibition of histamine firing.
+#DOI:
 # Dependent on Serotonin-activated g-protein (b) and the  equilibrium  value
 # of  the  activated  G-protein (c).
 # Units in uM. 
